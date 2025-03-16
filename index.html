@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Тест: Доминирование полушарий и IQ</title>
+  <style>
+    /* Базовые стили */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 32px;
+    }
+    .question {
+      margin-bottom: 20px;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    .question:last-child {
+      border-bottom: none;
+    }
+    .question p {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      transition: background 0.3s, border 0.3s;
+      cursor: pointer;
+    }
+    label:hover {
+      background: #f0f0f0;
+      border-color: #ddd;
+    }
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      background: #0077cc;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #005fa3;
+    }
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background: #f9f9f9;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .result.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Тест: Доминирование полушарий и нормированный IQ</h1>
+    <form id="testForm">
+      <!-- Вопрос 1 -->
+      <div class="question">
+        <p>1. Какое занятие приносит вам наибольшее удовлетворение?</p>
+        <label><input type="radio" name="q1" data-iq="10" data-left="2" data-right="0"> Решение логических задач</label>
+        <label><input type="radio" name="q1" data-iq="8" data-left="0" data-right="2"> Творческое рисование</label>
+        <label><input type="radio" name="q1" data-iq="7" data-left="1" data-right="0"> Спортивные тренировки</label>
+        <label><input type="radio" name="q1" data-iq="8" data-left="1" data-right="1"> Чтение художественной литературы</label>
+      </div>
+      <!-- Вопрос 2 -->
+      <div class="question">
+        <p>2. Как вы предпочитаете решать сложные проблемы?</p>
+        <label><input type="radio" name="q2" data-iq="10" data-left="2" data-right="0"> Методичным анализом</label>
+        <label><input type="radio" name="q2" data-iq="8" data-left="0" data-right="2"> Интуитивно, полагаясь на воображение</label>
+        <label><input type="radio" name="q2" data-iq="9" data-left="1" data-right="1"> Комбинируя логику и креативность</label>
+        <label><input type="radio" name="q2" data-iq="7" data-left="1" data-right="1"> Обсуждая проблему с другими</label>
+      </div>
+      <!-- Вопрос 3 -->
+      <div class="question">
+        <p>3. Какой подход в обучении вам больше подходит?</p>
+        <label><input type="radio" name="q3" data-iq="10" data-left="2" data-right="0"> Самостоятельное изучение теории</label>
+        <label><input type="radio" name="q3" data-iq="9" data-left="0" data-right="2"> Практические занятия и эксперименты</label>
+        <label><input type="radio" name="q3" data-iq="8" data-left="1" data-right="1"> Групповые обсуждения</label>
+        <label><input type="radio" name="q3" data-iq="8" data-left="1" data-right="1"> Использование интерактивных технологий</label>
+      </div>
+      <!-- Вопрос 4 -->
+      <div class="question">
+        <p>4. Как вы предпочитаете проводить свободное время?</p>
+        <label><input type="radio" name="q4" data-iq="7" data-left="1" data-right="0"> Заниматься спортом</label>
+        <label><input type="radio" name="q4" data-iq="8" data-left="0" data-right="2"> Творческое занятие (рисование, музыка)</label>
+        <label><input type="radio" name="q4" data-iq="9" data-left="2" data-right="0"> Чтение и изучение новых тем</label>
+        <label><input type="radio" name="q4" data-iq="10" data-left="2" data-right="0"> Участие в интеллектуальных играх</label>
+      </div>
+      <!-- Вопрос 5 -->
+      <div class="question">
+        <p>5. Как вы относитесь к изучению иностранных языков?</p>
+        <label><input type="radio" name="q5" data-iq="10" data-left="2" data-right="0"> С большим энтузиазмом изучаю грамматику и лексику</label>
+        <label><input type="radio" name="q5" data-iq="8" data-left="1" data-right="1"> Интересуюсь культурой и общением</label>
+        <label><input type="radio" name="q5" data-iq="9" data-left="1" data-right="1"> Изучаю через практику и общение</label>
+        <label><input type="radio" name="q5" data-iq="7" data-left="1" data-right="0"> Предпочитаю изучать самостоятельно по материалам</label>
+      </div>
+      <!-- Вопрос 6 -->
+      <div class="question">
+        <p>6. Как вы справляетесь с нестандартными задачами?</p>
+        <label><input type="radio" name="q6" data-iq="10" data-left="2" data-right="0"> Применяю логический анализ</label>
+        <label><input type="radio" name="q6" data-iq="8" data-left="0" data-right="2"> Ищу креативные решения</label>
+        <label><input type="radio" name="q6" data-iq="9" data-left="1" data-right="1"> Комбинирую оба подхода</label>
+        <label><input type="radio" name="q6" data-iq="7" data-left="1" data-right="1"> Обсуждаю проблему с друзьями</label>
+      </div>
+      <!-- Вопрос 7 -->
+      <div class="question">
+        <p>7. Какую роль в вашей жизни играют наука и техника?</p>
+        <label><input type="radio" name="q7" data-iq="10" data-left="2" data-right="0"> Наука – основа моего мировоззрения</label>
+        <label><input type="radio" name="q7" data-iq="8" data-left="1" data-right="1"> Технологии помогают решать ежедневные задачи</label>
+        <label><input type="radio" name="q7" data-iq="9" data-left="1" data-right="1"> Интересуюсь новаторством и экспериментами</label>
+        <label><input type="radio" name="q7" data-iq="7" data-left="0" data-right="2"> Ценю науку, но предпочитаю творчество</label>
+      </div>
+      <!-- Вопрос 8 -->
+      <div class="question">
+        <p>8. Как часто вы занимаетесь самообразованием?</p>
+        <label><input type="radio" name="q8" data-iq="10" data-left="2" data-right="0"> Ежедневно, постоянно ищу новые знания</label>
+        <label><input type="radio" name="q8" data-iq="8" data-left="1" data-right="1"> Регулярно, несколько раз в неделю</label>
+        <label><input type="radio" name="q8" data-iq="7" data-left="1" data-right="0"> Иногда, когда возникает интерес</label>
+        <label><input type="radio" name="q8" data-iq="6" data-left="0" data-right="1"> Редко, если это не требует усилий</label>
+      </div>
+      <!-- Вопрос 9 -->
+      <div class="question">
+        <p>9. Как вы относитесь к участию в интеллектуальных играх?</p>
+        <label><input type="radio" name="q9" data-iq="10" data-left="2" data-right="0"> Обожаю решать головоломки и кроссворды</label>
+        <label><input type="radio" name="q9" data-iq="8" data-left="1" data-right="1"> Играю для удовольствия</label>
+        <label><input type="radio" name="q9" data-iq="7" data-left="1" data-right="0"> Считаю их полезными, но не приоритетными</label>
+        <label><input type="radio" name="q9" data-iq="6" data-left="0" data-right="1"> Предпочитаю активный отдых</label>
+      </div>
+      <!-- Вопрос 10 -->
+      <div class="question">
+        <p>10. Как вы решаете проблемы в повседневной жизни?</p>
+        <label><input type="radio" name="q10" data-iq="10" data-left="2" data-right="0"> Планирую и анализирую ситуацию</label>
+        <label><input type="radio" name="q10" data-iq="8" data-left="0" data-right="2"> Принимаю решения интуитивно</label>
+        <label><input type="radio" name="q10" data-iq="7" data-left="1" data-right="1"> Обсуждаю проблему с близкими</label>
+        <label><input type="radio" name="q10" data-iq="8" data-left="1" data-right="1"> Стараюсь найти компромисс</label>
+      </div>
+      <!-- Вопрос 11 -->
+      <div class="question">
+        <p>11. Какую литературу вы предпочитаете?</p>
+        <label><input type="radio" name="q11" data-iq="10" data-left="2" data-right="0"> Научно-популярную, для расширения кругозора</label>
+        <label><input type="radio" name="q11" data-iq="9" data-left="2" data-right="0"> Классическую, для глубокого анализа</label>
+        <label><input type="radio" name="q11" data-iq="8" data-left="0" data-right="2"> Фантастическую, для развития воображения</label>
+        <label><input type="radio" name="q11" data-iq="8" data-left="1" data-right="1"> Современную, для актуальности</label>
+      </div>
+      <!-- Вопрос 12 -->
+      <div class="question">
+        <p>12. Как вы оцениваете свою способность к планированию?</p>
+        <label><input type="radio" name="q12" data-iq="10" data-left="2" data-right="0"> Всегда имею чёткий план действий</label>
+        <label><input type="radio" name="q12" data-iq="8" data-left="1" data-right="1"> Планирую, но иногда импровизирую</label>
+        <label><input type="radio" name="q12" data-iq="7" data-left="1" data-right="0"> Планирую на ходу</label>
+        <label><input type="radio" name="q12" data-iq="6" data-left="0" data-right="2"> Предпочитаю спонтанность</label>
+      </div>
+      <!-- Вопрос 13 -->
+      <div class="question">
+        <p>13. Какой способ мышления вам ближе?</p>
+        <label><input type="radio" name="q13" data-iq="10" data-left="2" data-right="0"> Аналитическое, основанное на логике</label>
+        <label><input type="radio" name="q13" data-iq="8" data-left="0" data-right="2"> Творческое, для генерации новых идей</label>
+        <label><input type="radio" name="q13" data-iq="9" data-left="1" data-right="1"> Комбинированное, для решения сложных задач</label>
+        <label><input type="radio" name="q13" data-iq="7" data-left="1" data-right="0"> Практическое, для быстрой адаптации</label>
+      </div>
+      <!-- Вопрос 14 -->
+      <div class="question">
+        <p>14. Какую роль играет искусство в вашем развитии?</p>
+        <label><input type="radio" name="q14" data-iq="9" data-left="0" data-right="2"> Искусство вдохновляет и развивает воображение</label>
+        <label><input type="radio" name="q14" data-iq="8" data-left="1" data-right="1"> Помогает лучше понимать мир</label>
+        <label><input type="radio" name="q14" data-iq="8" data-left="0" data-right="2"> Развивает эстетическое восприятие</label>
+        <label><input type="radio" name="q14" data-iq="6" data-left="1" data-right="0"> Не является приоритетным</label>
+      </div>
+      <!-- Вопрос 15 -->
+      <div class="question">
+        <p>15. Как вы справляетесь со стрессовыми ситуациями?</p>
+        <label><input type="radio" name="q15" data-iq="10" data-left="2" data-right="0"> Анализирую причины и принимаю меры</label>
+        <label><input type="radio" name="q15" data-iq="8" data-left="0" data-right="2"> Использую творческие методы расслабления</label>
+        <label><input type="radio" name="q15" data-iq="7" data-left="1" data-right="1"> Обсуждаю проблемы с друзьями</label>
+        <label><input type="radio" name="q15" data-iq="8" data-left="1" data-right="0"> Быстро адаптируюсь</label>
+      </div>
+      <!-- Вопрос 16 -->
+      <div class="question">
+        <p>16. Как вы относитесь к научным исследованиям?</p>
+        <label><input type="radio" name="q16" data-iq="10" data-left="2" data-right="0"> С большим интересом изучаю новые данные</label>
+        <label><input type="radio" name="q16" data-iq="8" data-left="1" data-right="1"> Оцениваю их важность для общества</label>
+        <label><input type="radio" name="q16" data-iq="7" data-left="1" data-right="0"> Считаю их полезными, но не слежу за ними</label>
+        <label><input type="radio" name="q16" data-iq="8" data-left="1" data-right="0"> Предпочитаю применять знания на практике</label>
+      </div>
+      <!-- Вопрос 17 -->
+      <div class="question">
+        <p>17. Как вы развиваете свою креативность?</p>
+        <label><input type="radio" name="q17" data-iq="10" data-left="0" data-right="2"> Через творчество (рисование, музыка, литература)</label>
+        <label><input type="radio" name="q17" data-iq="8" data-left="0" data-right="2"> Участвую в воркшопах и мастер-классах</label>
+        <label><input type="radio" name="q17" data-iq="9" data-left="1" data-right="1"> Экспериментирую с идеями самостоятельно</label>
+        <label><input type="radio" name="q17" data-iq="8" data-left="1" data-right="1"> Обмениваюсь идеями с коллегами</label>
+      </div>
+      <!-- Вопрос 18 -->
+      <div class="question">
+        <p>18. Как часто вы принимаете решения, основываясь на интуиции?</p>
+        <label><input type="radio" name="q18" data-iq="10" data-left="0" data-right="2"> Очень часто, я доверяю интуиции</label>
+        <label><input type="radio" name="q18" data-iq="8" data-left="0" data-right="2"> Иногда, когда анализа недостаточно</label>
+        <label><input type="radio" name="q18" data-iq="7" data-left="2" data-right="0"> Реже, предпочитаю логический подход</label>
+        <label><input type="radio" name="q18" data-iq="6" data-left="2" data-right="0"> Почти никогда, всегда анализирую</label>
+      </div>
+      <!-- Вопрос 19 -->
+      <div class="question">
+        <p>19. Как вы оцениваете свою способность к самоанализу?</p>
+        <label><input type="radio" name="q19" data-iq="10" data-left="2" data-right="0"> Отлично, я часто анализирую свои поступки</label>
+        <label><input type="radio" name="q19" data-iq="8" data-left="1" data-right="1"> Хорошо, но всегда есть что улучшить</label>
+        <label><input type="radio" name="q19" data-iq="7" data-left="1" data-right="0"> Удовлетворительно, задумываюсь редко</label>
+        <label><input type="radio" name="q19" data-iq="6" data-left="0" data-right="1"> Мне сложно объективно оценить себя</label>
+      </div>
+      <!-- Вопрос 20 -->
+      <div class="question">
+        <p>20. Какую роль играют дебаты и дискуссии в вашем развитии?</p>
+        <label><input type="radio" name="q20" data-iq="10" data-left="2" data-right="0"> Стимулируют глубокий анализ</label>
+        <label><input type="radio" name="q20" data-iq="9" data-left="1" data-right="1"> Помогают взглянуть на проблему с разных сторон</label>
+        <label><input type="radio" name="q20" data-iq="8" data-left="1" data-right="0"> Участвую, если тема интересна</label>
+        <label><input type="radio" name="q20" data-iq="6" data-left="0" data-right="1"> Предпочитаю избегать конфликтов</label>
+      </div>
+      <!-- Вопрос 21 -->
+      <div class="question">
+        <p>21. Как вы относитесь к занятиям программированием?</p>
+        <label><input type="radio" name="q21" data-iq="10" data-left="2" data-right="0"> Обожаю программировать и решать логические задачи</label>
+        <label><input type="radio" name="q21" data-iq="8" data-left="1" data-right="1"> Нравится, когда можно применять творческий подход</label>
+        <label><input type="radio" name="q21" data-iq="7" data-left="1" data-right="0"> Интересно, но не как хобби</label>
+        <label><input type="radio" name="q21" data-iq="9" data-left="2" data-right="0"> Программирую для практических задач</label>
+      </div>
+      <!-- Вопрос 22 -->
+      <div class="question">
+        <p>22. Как вы оцениваете свою способность к абстрактному мышлению?</p>
+        <label><input type="radio" name="q22" data-iq="10" data-left="0" data-right="2"> Легко вижу общую картину</label>
+        <label><input type="radio" name="q22" data-iq="8" data-left="1" data-right="1"> У меня хорошие концептуальные навыки</label>
+        <label><input type="radio" name="q22" data-iq="7" data-left="1" data-right="0"> Иногда требуются усилия</label>
+        <label><input type="radio" name="q22" data-iq="6" data-left="0" data-right="1"> Мне сложно формировать абстрактные идеи</label>
+      </div>
+      <!-- Вопрос 23 -->
+      <div class="question">
+        <p>23. Какой стиль работы вам ближе?</p>
+        <label><input type="radio" name="q23" data-iq="9" data-left="1" data-right="1"> Работа в команде, обмен идеями стимулирует меня</label>
+        <label><input type="radio" name="q23" data-iq="10" data-left="2" data-right="0"> Самостоятельная работа для глубокого сосредоточения</label>
+        <label><input type="radio" name="q23" data-iq="9" data-left="1" data-right="1"> Комбинированный подход дает лучший результат</label>
+        <label><input type="radio" name="q23" data-iq="8" data-left="1" data-right="1"> Предпочитаю динамичный рабочий процесс</label>
+      </div>
+      <!-- Вопрос 24 (абсурдный) -->
+      <div class="question">
+        <p>24. Какую шутку вы считаете смешнее: "Про говно", "Канаву" или "Маму"?</p>
+        <label><input type="radio" name="q24" data-iq="5" data-left="1" data-right="1"> Про говно</label>
+        <label><input type="radio" name="q24" data-iq="5" data-left="1" data-right="1"> Канаву</label>
+        <label><input type="radio" name="q24" data-iq="5" data-left="1" data-right="1"> Маму</label>
+        <label><input type="radio" name="q24" data-iq="4" data-left="1" data-right="1"> Никакая из них</label>
+      </div>
+      <button type="button" onclick="calculateResult()">Узнать результат</button>
+    </form>
+    <div id="result" class="result"></div>
+  </div>
+  
+  <script>
+    function calculateResult() {
+      const form = document.getElementById('testForm');
+      const totalQuestions = 24;
+      let rawScore = 0, leftScore = 0, rightScore = 0;
+      
+      for (let i = 1; i <= totalQuestions; i++) {
+        const answer = form.querySelector('input[name="q' + i + '"]:checked');
+        if (!answer) {
+          alert('Пожалуйста, ответьте на все вопросы (пропущен вопрос ' + i + ').');
+          return;
+        }
+        rawScore += parseInt(answer.getAttribute('data-iq'));
+        leftScore += parseInt(answer.getAttribute('data-left'));
+        rightScore += parseInt(answer.getAttribute('data-right'));
+      }
+      
+      // Определение доминирующего полушария
+      let dominantHemisphere = '';
+      if (leftScore > rightScore) {
+        dominantHemisphere = 'Левое (аналитическое мышление)';
+      } else if (rightScore > leftScore) {
+        dominantHemisphere = 'Правое (творческое мышление)';
+      } else {
+        dominantHemisphere = 'Сбалансированное развитие обоих полушарий';
+      }
+      
+      // Нормированный IQ (диапазон 70-150)
+      const normalizedIQ = Math.round(70 + (rawScore / 240) * 80);
+      
+      let iqLevel = '';
+      if (normalizedIQ < 85) {
+        iqLevel = 'Низкий IQ';
+      } else if (normalizedIQ <= 115) {
+        iqLevel = 'Средний IQ';
+      } else if (normalizedIQ <= 130) {
+        iqLevel = 'Высокий IQ';
+      } else {
+        iqLevel = 'Очень высокий IQ';
+      }
+      
+      // Вычисление процентного соотношения полушарий
+      const totalHemispheres = leftScore + rightScore;
+      const leftPercent = totalHemispheres ? Math.round((leftScore / totalHemispheres) * 100) : 0;
+      const rightPercent = totalHemispheres ? Math.round((rightScore / totalHemispheres) * 100) : 0;
+      
+      // Формирование описательного текста
+      let description = `<p>Ваш нормированный IQ: <strong>${normalizedIQ}</strong> (${iqLevel}).</p>`;
+      description += `<p>Ваше аналитическое (левое) мышление составляет ${leftPercent}% от общего уровня, а творческое (правое) — ${rightPercent}%.</p>`;
+      if (dominantHemisphere.indexOf('Левое') !== -1) {
+        description += `<p>Ваши ответы свидетельствуют о доминировании аналитического мышления, что позволяет вам структурировать информацию и глубоко анализировать данные.</p>`;
+      } else if (dominantHemisphere.indexOf('Правое') !== -1) {
+        description += `<p>Ваш тест указывает на преобладание творческого мышления, что проявляется в способности генерировать новые идеи и нестандартно решать задачи.</p>`;
+      } else {
+        description += `<p>Ваши результаты демонстрируют сбалансированное развитие обоих типов мышления — аналитического и творческого.</p>`;
+      }
+      
+      const resultHTML = `
+        <h2>Ваш результат</h2>
+        <p><strong>Нормированный IQ:</strong> ${normalizedIQ} — ${iqLevel}</p>
+        <p><strong>Доминирующее полушарие:</strong> ${dominantHemisphere}</p>
+        ${description}
+      `;
+      
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = resultHTML;
+      resultDiv.classList.add('visible');
+      resultDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
